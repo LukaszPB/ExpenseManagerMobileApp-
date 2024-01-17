@@ -11,17 +11,17 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface BookDao {
+public interface ExpenseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Book book);
+    void insert(Expense expense);
     @Update
-    void update(Book book);
+    void update(Expense expense);
     @Delete
-    void delete(Book book);
-    @Query("DELETE FROM book")
+    void delete(Expense expense);
+    @Query("DELETE FROM Expense")
     void deleteAll();
-    @Query("SELECT * FROM book ORDER BY title")
-    LiveData<List<Book>> findAll();
-    @Query("SELECT * FROM book WHERE title LIke :title")
-    List<Book> findBookWithTitle(String title);
+    @Query("SELECT * FROM Expense ORDER BY name")
+    LiveData<List<Expense>> findAll();
+    @Query("SELECT * FROM Expense WHERE name LIke :name")
+    List<Expense> findBookWithTitle(String name);
 }

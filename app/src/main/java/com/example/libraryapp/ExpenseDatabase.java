@@ -11,16 +11,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class},version = 1, exportSchema = false)
-public abstract class BookDatabase extends RoomDatabase {
-    private static BookDatabase databaseInstance;
+@Database(entities = {Expense.class},version = 2, exportSchema = false)
+public abstract class ExpenseDatabase extends RoomDatabase {
+    private static ExpenseDatabase databaseInstance;
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
-    public abstract BookDao bookDao();
-    static BookDatabase getDatabaseInstance(final Context context) {
+    public abstract ExpenseDao bookDao();
+    static ExpenseDatabase getDatabaseInstance(final Context context) {
         if(databaseInstance == null) {
             databaseInstance = Room.databaseBuilder(context.getApplicationContext(),
-                    BookDatabase.class,"book_database")
+                    ExpenseDatabase.class,"book_database")
                     .addCallback(roomDatabaseCallback)
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return databaseInstance;
@@ -30,9 +31,9 @@ public abstract class BookDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             databaseWriteExecutor.execute(()->{
-                BookDao dao = databaseInstance.bookDao();
-                Book book = new Book("Clean Code","Robert C. Martin");
-                dao.insert(book);
+                ExpenseDao dao = databaseInstance.bookDao();
+                Expense expense = new Expense("Clean Code","Robert C. Martin");
+                dao.insert(expense);
             });
         }
     };
