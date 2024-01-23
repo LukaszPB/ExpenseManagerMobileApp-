@@ -8,10 +8,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Expense.class},version = 2, exportSchema = false)
+@Database(entities = {Expense.class},version = 4, exportSchema = false)
 public abstract class ExpenseDatabase extends RoomDatabase {
     private static ExpenseDatabase databaseInstance;
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
@@ -32,7 +33,7 @@ public abstract class ExpenseDatabase extends RoomDatabase {
             super.onCreate(db);
             databaseWriteExecutor.execute(()->{
                 ExpenseDao dao = databaseInstance.bookDao();
-                Expense expense = new Expense("Clean Code","Robert C. Martin");
+                Expense expense = new Expense("Clean Code",12,new Date());
                 dao.insert(expense);
             });
         }

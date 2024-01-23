@@ -14,4 +14,5 @@
     <string name="empty_not_saved">Expense not saved because there are empty fields</string>
     <string name="expense_added">Expense added</string>
     <string name="expense_edited">Expense edited</string>
+    <string name="title">Wydatki w tym</string>
 </resources>

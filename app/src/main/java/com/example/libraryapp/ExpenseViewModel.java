@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ExpenseViewModel extends AndroidViewModel {
     private final ExpenseRepository expenseRepository;
-    private final LiveData<List<Expense>> books;
+    private LiveData<List<Expense>> books;
     public ExpenseViewModel(@NonNull Application application) {
         super(application);
         expenseRepository = new ExpenseRepository(application);
