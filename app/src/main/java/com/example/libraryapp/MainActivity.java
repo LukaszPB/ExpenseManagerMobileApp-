@@ -5,39 +5,32 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -131,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 for(Expense expense : filterExpenses) {
                     totalCost += expense.getPrice();
                 }
-                totalCostTextView.setText("suma wydatków: " + totalCost + "zł");
+
+                totalCostTextView.setText("suma: " + totalCost + "zł");
                 adapter.setBooks(filterExpenses);
             }
         });
@@ -154,11 +148,20 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     Intent intent = new Intent();
                     intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    //startActivityForResult(zrobZdjecieIntent, REQUEST_IMAGE_CAPTURE);
+                    startActivityForResult(zrobZdjecieIntent, 0);
                 }
                 catch(Exception e){
                     e.printStackTrace();
                 }
+            }
+        });
+
+        FloatingActionButton quoteButton = findViewById(R.id.quote_button);
+        quoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, QuoteActivity.class);
+                startActivity(intent);
             }
         });
     }
